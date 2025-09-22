@@ -1,0 +1,99 @@
+---
+title: "TCGA groundtruth"
+output:
+  html_document:
+    df_print: paged
+---
+
+
+```{r}
+library(SigMA)
+```
+
+#Defining input directories
+```{r}
+project.folder <- "/home/ferperez/SigMA_tests/"
+input.path <- "/home/ferperez/SigMA_tests/Input_datasets/"
+output.path <- "/home/ferperez/SigMA_tests/Output_SigMA_Rversion/"
+```
+
+#Listing subdirectories in Input_datasets/
+```{r}
+all.dirs <- list.dirs(input.path, recursive = TRUE)
+len.dir.depth <-  lengths(strsplit(all.dirs, "/"))
+input.dirs <- all.dirs[len.dir.depth == max(len.dir.depth)]
+print("Input directories:")
+input.dirs
+```
+#Creating dictionary for matching input data with SigMA datasets
+```{r}
+samples.dict <- data.frame(tumor_folder=c("BRCA", "COADREAD", "PAAD"), 
+                       tumor_abreviation=c("breast", "crc", "panc_ad"))
+
+sequencing.dict <- data.frame(seq_folder=c("MSK_IMPACTv1", "mc3"), 
+                       seq_abreviation=c("msk", "tcga_mc3"))
+
+```
+
+#Running SigMA directory by directory
+```{r}
+#Running SigMA directory by directory
+#mydir <- input.dirs[3]
+for (mydir in input.dirs){
+  seq_type <- strsplit(mydir, "/")[[1]][max(len.dir.depth)]
+  sample_type <- strsplit(mydir, "/")[[1]][max(len.dir.depth) -1]
+  seq_type_for_SigMA =  sequencing.dict[sequencing.dict$seq_folder == seq_type,"seq_abreviation"]
+  sample_type_for_SigMA =  samples.dict[samples.dict$tumor_folder == sample_type,"tumor_abreviation"]
+  
+
+  #In case the input folers are not supported by SigMA
+  if (length(seq_type_for_SigMA) == 0 | length(sample_type_for_SigMA) == 0){
+    print ("Ignoring the next dir because of lack of matching in list_tumor_types()")
+    print(mydir)
+    next
+  }
+  
+  print (paste0("Starting to analyse the next dir: ", mydir))
+
+  #Defining the output folder for storing results
+  out.put.dir.iter <- paste0(output.path, sample_type, "/", seq_type, "/")
+  dir.create(out.put.dir.iter, recursive = TRUE)
+  
+  
+  #The datasets in mc3 folder are MAF, otherwise VCF
+  if (seq_type_for_SigMA == "tcga_mc3"){
+    data_type = "maf"
+    mydir = paste0(mydir, "/", sample_type_for_SigMA, ".maf")
+  }else{
+    data_type = "vcf"
+  }
+  start_time <- Sys.time() 
+  genomes_matrix <- make_matrix(mydir, file_type = data_type,
+                                ref_genome_name = 'hg19')
+  
+  genomes <- conv_snv_matrix_to_df(genomes_matrix)
+  mut_counts_file <- paste0(out.put.dir.iter, "/", "Mut_counts.csv")
+  
+  write.table(genomes, mut_counts_file,
+            sep = ',', row.names = F, col.names = T , quote = F)
+  
+  message(paste0('96-dimensional matrix is saved in ',
+                 paste0(out.put.dir.iter, "/", "Mut_counts.csv")))
+  message('Running SigMA')
+  
+  run(mut_counts_file, 
+          data = seq_type_for_SigMA, 
+          do_assign = T, 
+          do_mva = TRUE,
+          add_sig3 = TRUE,
+          tumor_type = sample_type_for_SigMA, 
+          lite_format = TRUE,
+          catalog_name = 'cosmic_v2_inhouse')
+  
+  end_time <- Sys.time()
+  total_time <- end_time - start_time
+
+  print(paste0("Execution total time: ", as.numeric(total_time, units = "secs")," secs"))
+}
+```
+
