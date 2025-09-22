@@ -22,4 +22,18 @@ Create an input dataset folder with the next structure:
 └── PAAD
     ├── mc3
     └── SeqCap_capture_targets
+
 ```
+
+Then, in both scripts modify the current dictonay for matching the folder name with the `tumor_type` string expected by SigMA, and similarly for the subfolder name with the `data_type` expected by SigMA.
+
+## Intermediate files generated
+The R script will generate a folder `Output_SigMA_Rversion` in this the same structure of folders as in the input will be generated. For the python notebook, similarly a folder `Output_SigMA_Py` will be generated. Then, the python notebook will compare the results in `Output_SigMA_Rversion` and `Output_SigMA_Py`.
+
+The main intermediate inputs are the SBS mutational counts in three base context (96 column matrix) and the output from `SigMA::run()`
+
+## Results of comparision
+
+See inside the Python notebook `Comparing_SigMApy_vs_SigMAR.ipynb` to check the results of the comparisions.
+
+
