@@ -34,6 +34,6 @@ The main intermediate inputs are the SBS mutational counts in three base context
 
 ## Results of comparision
 
-See inside the Python notebook `Comparing_SigMApy_vs_SigMAR.ipynb` to check the results of the comparisions.
+See inside the Python notebook `Comparing_SigMApy_vs_SigMAR.ipynb` to check the results of the comparisions. By now the comparisions are for the columns `sigs_all` and `exps_all`.
 
 
