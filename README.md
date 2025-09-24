@@ -7,7 +7,7 @@ The script `SigMA_running_TCGA_groundtruth.Rmd` will run SigMA_R (in R) for all 
 
 ## How to set up the input
 
-The input datasets are currently in Dropbox: https://www.dropbox.com/scl/fo/uhhc6uybxsfvxhgfpziz5/AG4LwgyvthBztEzxdDv2XcE?rlkey=jmjivsn66v5au97tifmv2w0v0&st=zs8wpm3j&dl=0
+The input datasets are currently in Dropbox: https://www.dropbox.com/scl/fo/f8qiupeo1xat2rppirc6a/AAL4mhOUlt2fPsCcxbQgJnQ?rlkey=juosan8vsjv52599qivjkq68i&st=htxlatf9&dl=0
 
 
 Create an input dataset folder with the next structure:
