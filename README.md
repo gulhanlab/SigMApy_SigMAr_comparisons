@@ -5,9 +5,30 @@ Scripts to compare the results from SigMA in R version with the SigMA in Python 
 
 The script `SigMA_running_TCGA_groundtruth.Rmd` will run SigMA_R (in R) for all the input folders and files. And then, run the script `Comparing_SigMApy_vs_SigMAR.ipynb` to run the SigMA in python version and compare the results with the SigMA_R. 
 
-## How to set up the input
+## Setup
+Follow this prior to running the analysis:
+### Python environment
+```bash
+git clone https://github.com/gulhanlab/SigMApy_SigMAr_comparisons.git
+cd SigMApy_SigMAr_comparisons
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+pip install -e /path/to/local/sigmapy
+mkdir var
+touch .env
+```
 
-The input datasets are currently in Dropbox: https://www.dropbox.com/scl/fo/f8qiupeo1xat2rppirc6a/AAL4mhOUlt2fPsCcxbQgJnQ?rlkey=juosan8vsjv52599qivjkq68i&st=htxlatf9&dl=0
+### Environment Variables
+Copy/paste this into the `.env` file and replace with your paths:
+```Python
+PROJECT_FOLDER=</path/to>/SigMApy_SigMAr_comparisons
+INPUT_PATH=</path/to>/SigMApy_SigMAr_comparisons/var
+OUTPUT_PATH=</path/to>/SigMApy_SigMAr_comparisons/out
+```
+
+### Data
+Download and unzip https://www.dropbox.com/scl/fo/f8qiupeo1xat2rppirc6a/AAL4mhOUlt2fPsCcxbQgJnQ?rlkey=juosan8vsjv52599qivjkq68i&st=htxlatf9&dl=0 into the `/var` directory.
 
 
 Create an input dataset folder with the next structure:
