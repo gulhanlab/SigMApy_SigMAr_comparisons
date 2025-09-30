@@ -28,7 +28,7 @@ OUTPUT_PATH=</path/to>/SigMApy_SigMAr_comparisons/out
 ```
 
 ### Data
-Download and unzip https://www.dropbox.com/scl/fo/f8qiupeo1xat2rppirc6a/AAL4mhOUlt2fPsCcxbQgJnQ?rlkey=juosan8vsjv52599qivjkq68i&st=htxlatf9&dl=0 into the `/var` directory.
+Download and unzip https://www.dropbox.com/scl/fo/1uko0k67fw40hn1aduzpb/AKvdgGJPvE5sncQoP02EMxU?rlkey=kbn61m1jjf13qnvhtlsr0uac4&st=y9n8qwd3&dl=0 into the `/var` directory.
 
 
 Create an input dataset folder with the next structure:
